@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@model IEnumerable<CourseProject.Models.Post>
+
+<div class="jumbotron">
+
+    <!--<img src="../GaW.png">
+    <h1>Galaxy at War:Clone Wars</h1>-->
+
+    <img src="http://i446.photobucket.com/albums/qq182/sivirys/DemoProject/GaW_zpslxkkymo8.png" />
+
+    <p class="lead"><strong>Welcome to the forum page of  Galaxy at War:Clone Wars mod - a total conversion for </strong><i>SW Empire at War: Forces of Corruption</i></p>
+    <p><a href="http://gawcwforumv2.azurewebsites.net/Home/About" class="btn btn-primary btn-lg">Find out more &raquo;</a></p>
+</div>
+
+<section class="row">
+
+    @foreach (var post in Model)
+    {
+        <article class="post col-md-4">
+            <h2>Latest topics</h2>
+            <h3><a href="/Posts/Details/@post.Id">@CourseProject.Classes.Utils.CutText(post.Title, 40)</a></h3>
+            <div>
+                Created on <i>@post.Date</i><br />
+
+                @if (@post.Author != null)
+                {
+                    @:by <i>@post.Author.FullName </i>
+          }
+                else
+                {
+                    @:by <i>Guest</i>
+          }
+
+            </div>
+            <p>@CourseProject.Classes.Utils.CutText(post.Body, 100)</p>
+        </article>
+    }
+
+</section>

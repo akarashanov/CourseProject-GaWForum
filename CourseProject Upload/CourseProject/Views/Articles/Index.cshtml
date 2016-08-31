@@ -1,0 +1,56 @@
+﻿@model IEnumerable<CourseProject.Models.Article>
+
+@{
+    ViewBag.Title = "Articles";
+}
+
+<h2><strong> The latest news about the mod</strong></h2>
+
+<div>
+    @if (User.IsInRole("Administrators"))
+    {
+        @Html.ActionLink("Create new Article", "Create")
+    } 
+</div>
+
+<table class="table">
+    <tr>
+        <th>
+            <h4><b> @Html.DisplayNameFor(model => model.Title)</b></h4> 
+        </th>
+        <th>
+            <h4><b>  @Html.DisplayNameFor(model => model.Body)</b></h4>
+        </th>
+        <th>
+            <h4><b>  @Html.DisplayNameFor(model => model.Date)</b></h4>
+        </th>
+        
+       
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            <h5>@Html.DisplayFor(modelItem => item.Title)</h5>
+        </td> 
+        <td>
+            @CourseProject.Classes.Utils.CutText(item.Body, 200)
+        </td>
+        <td>
+            <i> @Html.DisplayFor(modelItem => item.Date)</i>
+        </td>
+
+        <td>
+            @Html.ActionLink("Details", "Details", new { id=item.Id })
+            @if (User.IsInRole("Administrators") || (item.Author != null && User.Identity.Name == item.Author.UserName))
+            {
+                @:|
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) @:|
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            }
+        </td>
+    </tr>
+}
+
+</table>
